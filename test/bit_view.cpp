@@ -48,7 +48,7 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
     for (size_t i = 0; i < bits.size(); ++i) {
       CHECK(bits[i] == 0);
     }
-    auto pattern = [](auto i) { return i % (i / wordSize + 1) == 0; };
+    auto pattern = [=](auto i) { return i % (i / wordSize + 1) == 0; };
     for (size_t i = 0; i < bits.size(); ++i) {
       bits.set(i, pattern(i));
     }
