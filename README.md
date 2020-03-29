@@ -5,8 +5,8 @@
 
 # BitView
 
-A simple container view for seamless swithing between integer and bit representations.
-Ever wished you could have the convienience and space optimizations of `std::vector<bool>` without sacrificing performance and optimizations for bulk operations?
+A simple container view for seamless switching between integer and bit representations.
+Ever wished you could have the convenience and space optimizations of `std::vector` without sacrificing performance and optimizations for bulk operations? 
 Then this is a library for you!
 
 ## Usage
