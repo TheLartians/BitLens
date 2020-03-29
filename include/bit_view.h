@@ -1,6 +1,7 @@
 #pragma once
 
 #include <climits>
+#include <cstddef>
 
 namespace bit_view {
 
@@ -32,10 +33,15 @@ public:
   /**
    * returns the value of the `i`th bit.
    */
-  bool operator[](size_t i) const {
+  bool get(size_t i) const {
     Word offset = i % WORD_SIZE;
     return (container[i / WORD_SIZE] >> offset) & Word(1);
   }
+
+  /**
+   * same as `get(i)`.
+   */
+  bool operator[](size_t i) const { return get(i); }
 
   /**
    * sets the value of the `i`th bit
