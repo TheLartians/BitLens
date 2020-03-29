@@ -38,6 +38,8 @@ target_link_libraries(BitViewTests doctest BitView)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-Wall -pedantic -Wextra -Werror")
+else()
+  set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17)
 endif()
 
 # ---- Add BitViewTests ----
