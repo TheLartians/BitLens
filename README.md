@@ -22,10 +22,10 @@ int main() {
   std::vector<char> container; // the container that stores the actual data
   bit_view::Container bits(container); // any integer type is supported
   bits.resizeToHold(10); // resize container to store at least 10 bits
-  bits.size(); // the number of bits that the container can hold
-  bits.get(8); // get the ith bit
-  bits.set(8, 1); // set the ith bit
-  bits.forEach([](auto v, auto i){ ... }); // iterate over [value,index] pairs
+  bits.size(); // the actual number of bits that the container can store
+  bits.get(8); // gets the ith bit
+  bits.set(8, 1); // sets the ith bit
+  bits.forEach([](auto value, auto index){ ... }); // iterate over all bits
 }
 ```
 
