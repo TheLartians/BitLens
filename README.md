@@ -14,7 +14,7 @@ Then this is a library for you!
 The actual data is stored in a standard integer container, such as `std::vector<int>`.
 Biswise operations are performed as usual on the original container.
 These operate on many bits in parallel and are optimized by the compiler.
-`bit_view::Container` provides a simple api for bit-specific operations and can be used without overhead whenever needed.
+`bit_view::Container` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
 
 ## API
 
