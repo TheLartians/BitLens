@@ -6,7 +6,7 @@
 # BitView
 
 A simple container view for seamless switching between integer and bit representations.
-Ever wished you could have the convenience and space optimizations of `std::vector` without sacrificing performance and optimizations for bulk operations? 
+Ever wished you could have the convenience and space optimizations of `std::vector<bool>` without sacrificing performance and optimizations for bulk operations? 
 Then this is a library for you!
 
 ## Usage
@@ -21,10 +21,10 @@ Use `bit_view::Container` for everything else.
 int main() {
   std::vector<char> container; // the container that stores the actual data
   bit_view::Container bits(container); // any integer type is supported
-  bits.resizeToHold(10); // resize container to hold at least 10 bits
+  bits.resizeToHold(10); // resize container to store at least 10 bits
   bits.size(); // the number of bits that the container can hold
-  bits.get(4); // get the ith bit
-  bits.set(4, 1); // set the ith bit
+  bits.get(8); // get the ith bit
+  bits.set(8, 1); // set the ith bit
   bits.forEach([](auto v, auto i){ ... }); // iterate over [value,index] pairs
 }
 ```
