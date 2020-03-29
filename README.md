@@ -10,8 +10,8 @@ A C++17 bit view for vector types.
 ## Usage
 
 ```cpp
-std::vector<char> container; // any integer type is supported
-bit_view::Container bits(container);
+std::vector<char> container; // the container that stores the actual data
+bit_view::Container bits(container); // any integer type is supported
 bits.resizeToHold(10); // resize container to hold at least 10 bits
 bits.size() // the number of bits that the container can hold
 bits.get(4); // get the ith bit
