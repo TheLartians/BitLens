@@ -46,13 +46,16 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
   SUBCASE("set bits") {
     bits.resizeToHold(5 * wordSize);
     for (size_t i = 0; i < bits.size(); ++i) {
+      CAPTURE(i);
       CHECK(bits[i] == 0);
     }
     auto pattern = [=](auto i) { return i % (i / wordSize + 1) == 0; };
     for (size_t i = 0; i < bits.size(); ++i) {
+      CAPTURE(i);
       bits.set(i, pattern(i));
     }
     for (size_t i = 0; i < bits.size(); ++i) {
+      CAPTURE(i);
       CHECK(bits[i] == pattern(i));
     }
   }
