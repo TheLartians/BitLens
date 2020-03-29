@@ -17,4 +17,4 @@ jobs:
       run: cmake --build build
 
     - name: test
-      run: ./build/BitViewTests
+      run: cmake --build build --target test

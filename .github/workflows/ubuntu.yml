@@ -17,4 +17,4 @@ jobs:
       run: cmake --build build
 
     - name: test
-      run: ./build/BitViewTests
+      run: CTEST_OUTPUT_ON_FAILURE=1 cmake --build build --target test
