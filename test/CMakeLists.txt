@@ -35,7 +35,10 @@ CPMAddPackage(
 file(GLOB BitViewTests_sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 add_executable(BitViewTests ${BitViewTests_sources})
 target_link_libraries(BitViewTests doctest BitView)
-set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-Wall -pedantic -Wextra -Werror")
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+  set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-Wall -pedantic -Wextra -Werror")
+endif()
 
 # ---- Add BitViewTests ----
 
