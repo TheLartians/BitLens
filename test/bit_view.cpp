@@ -16,7 +16,7 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
     container.resize(2);
     CHECK(bits.size() == container.size() * wordSize);
 
-    std::bitset<sizeof(T) * bit_view::BITS_IN_BYTE> bitset;
+    std::bitset<wordSize> bitset;
     bitset[1] = 1;
     bitset[3] = 1;
     bitset[wordSize - 1] = 1;
