@@ -25,7 +25,7 @@ int main() {
 
 ## Integration
 
-BitView is a single header library the can be easily installed via [CPM.cmake](https://github.com/TheLartians/CPM.cmake).
+BitView is a single header library the can be easily added via [CPM.cmake](https://github.com/TheLartians/CPM.cmake).
 
 ```cmake
 CPMAddPackage(
@@ -35,4 +35,4 @@ CPMAddPackage(
 )
 ```
 
-Or, simply grab the header from git
+Alternatively use git submodules, install the library, or simply copy the header into your project. 
