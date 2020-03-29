@@ -6,7 +6,7 @@
 # BitView
 
 A zero-overhead container view for seamless switching between integer and bit representations.
-Ever wished you could have the convenience and compact storage of `std::vector<bool>` without sacrificing performance optimizations for bulk operations?
+Ever wished you could have the convenience and compact storage of `std::vector<bool>` without all the [issues](http://www.gotw.ca/publications/N1211.pdf) and performance sacrifices?
 Then this is a library for you!
 
 ## Usage
