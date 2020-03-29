@@ -21,7 +21,7 @@ Use `bit_view::Container` for everything else.
 int main() {
   std::vector<char> container; // the container that stores the actual data
   bit_view::Container bits(container); // any integer type is supported
-  bits.resizeToHold(10); // resize container to store at least 10 bits
+  bits.resizeToHold(10); // resize the container to store at least 10 bits
   bits.size(); // the actual number of bits that the container can store
   bits.get(8); // gets the ith bit
   bits.set(8, 1); // sets the ith bit
@@ -41,4 +41,4 @@ CPMAddPackage(
 )
 ```
 
-Alternatively use git submodules, install the library, or simply copy the header into your project. 
+Alternatively use git submodules, install globally, or simply download and copy the [header](include/bit_view.h) into your project. 
