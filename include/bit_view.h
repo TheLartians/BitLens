@@ -54,6 +54,16 @@ public:
       container[i / WORD_SIZE] &= ~(Word(1) << offset);
     }
   }
+
+  /**
+   * iterate over `[value,index]` pairs
+   */
+  template <class F> void forEach(F &&f) {
+    size_t N = size();
+    for (size_t idx = 0; idx != N; ++idx) {
+      f(get(idx), idx);
+    }
+  }
 };
 
 } // namespace bit_view

@@ -6,6 +6,9 @@
 #include <type_traits>
 #include <vector>
 
+// an irregular test sequence
+auto pattern = [](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
+
 TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
   std::vector<T> container;
   bit_view::Container bits(container);
@@ -57,9 +60,6 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
       CHECK(bits[i] == 0);
     }
 
-    // create a irregular test sequence
-    auto pattern = [=](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
-
     for (size_t i = 0; i < bits.size(); ++i) {
       CAPTURE(i);
       bits.set(i, pattern(i));
@@ -68,5 +68,14 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
       CAPTURE(i);
       CHECK(bits[i] == pattern(i));
     }
+  }
+
+  SUBCASE("iteration") {
+    bits.resizeToHold(5 * wordSize);
+    bits.forEach([&](auto, auto i) { bits.set(i, pattern(i)); });
+    bits.forEach([&](auto v, auto i) {
+      CAPTURE(i);
+      CHECK(v == pattern(i));
+    });
   }
 }
