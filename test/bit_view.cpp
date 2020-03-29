@@ -4,6 +4,7 @@
 #include <bitset>
 #include <doctest/doctest.h>
 #include <type_traits>
+#include <vector>
 
 TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
   std::vector<T> container;
