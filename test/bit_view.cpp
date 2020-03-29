@@ -19,7 +19,7 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
     std::bitset<wordSize> bitset;
     bitset[1] = 1;
     bitset[3] = 1;
-    // bitset[wordSize - 1] = 1;
+    bitset[7] = 1;
 
     container[0] = static_cast<T>(bitset.to_ulong());
     for (size_t i = 0; i < wordSize; ++i) {
@@ -29,7 +29,13 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
 
     bitset[2] = 1;
     bitset[3] = 0;
-    // bitset[wordSize - 2] = 1;
+    bitset[6] = 1;
+    // bitset[wordSize - 1] = 1;
+
+    // we cant set high bits in the bitset, due to a strange limitation in
+    // microsoft's STL that that throws an exception. high bits will be tested
+    // in the "set bits" test later.
+
     container[1] = static_cast<T>(bitset.to_ulong());
     for (size_t i = 0; i < wordSize; ++i) {
       CAPTURE(i);
@@ -49,7 +55,7 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
       CAPTURE(i);
       CHECK(bits[i] == 0);
     }
-    auto pattern = [=](auto i) { return i % (i / wordSize + 1) == 0; };
+    auto pattern = [=](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
     for (size_t i = 0; i < bits.size(); ++i) {
       CAPTURE(i);
       bits.set(i, pattern(i));
