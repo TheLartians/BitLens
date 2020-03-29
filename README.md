@@ -20,6 +20,7 @@ int main() {
   bits.size(); // the number of bits that the container can hold
   bits.get(4); // get the ith bit
   bits.set(4, 1); // set the ith bit
+  bits.forEach([](auto v, auto i){ ... }); // iterate over [value,index] pairs
 }
 ```
 
@@ -31,7 +32,7 @@ BitView is a single header library the can be easily added via [CPM.cmake](https
 CPMAddPackage(
   NAME BitView
   GITHUB_REPOSITORY TheLartians/BitView
-  VERSION 1.0
+  VERSION 1.1
 )
 ```
 
