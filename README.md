@@ -5,9 +5,14 @@
 
 # BitView
 
-A C++17 bit view for vector types.
+A simple container view for seamless switching between integer and bit representations.
+Ever wished you could have the convenience and space optimizations of `std::vector` without sacrificing performance and optimizations for bulk operations? 
+Then this is a library for you!
 
 ## Usage
+
+Perform any bulk operations through bitwise operators on the original container.
+Use `bit_view::Container` for everything else.
 
 ```cpp
 #include <bit_view.h>
