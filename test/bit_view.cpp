@@ -48,9 +48,17 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
   }
 
   SUBCASE("resize") {
-    bits.resizeToHold(5 * wordSize - 3);
+    bool fill;
+    SUBCASE("fill with 0") { fill = false; }
+    SUBCASE("fill with 1") { fill = true; }
+    CAPTURE(fill);
+    bits.resizeToHold(5 * wordSize - 3, fill);
     CHECK(bits.size() == 5 * wordSize);
     CHECK(container.size() == 5);
+    bits.forEach([&](auto v, auto i) {
+      CAPTURE(i);
+      CHECK(v == fill);
+    });
   }
 
   SUBCASE("set bits") {

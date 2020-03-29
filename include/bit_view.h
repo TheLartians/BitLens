@@ -27,7 +27,7 @@ public:
    */
   void resizeToHold(size_t N, bool v = false) {
     Word offset = N % WORD_SIZE == 0 ? 0 : 1;
-    container.resize(N / WORD_SIZE + offset, v);
+    container.resize(N / WORD_SIZE + offset, v ? ~0 : 0);
   }
 
   /**
