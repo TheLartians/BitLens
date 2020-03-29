@@ -55,7 +55,10 @@ TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
       CAPTURE(i);
       CHECK(bits[i] == 0);
     }
+
+    // create a irregular test sequence
     auto pattern = [=](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
+
     for (size_t i = 0; i < bits.size(); ++i) {
       CAPTURE(i);
       bits.set(i, pattern(i));
