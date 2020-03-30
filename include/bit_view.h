@@ -51,12 +51,6 @@ public:
     const size_t index = i / WORD_SIZE;
     container[index] =
         (container[index] & ~(Word(1) << offset)) | (v << offset);
-
-    // if (v) {
-    //   container[i / WORD_SIZE] |= Word(1) << offset;
-    // } else {
-    //   container[i / WORD_SIZE] &= ~(Word(1) << offset);
-    // }
   }
 
   /**
