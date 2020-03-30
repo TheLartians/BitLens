@@ -5,22 +5,31 @@
 
 # BitView
 
-A C++17 bit view for vector types.
+A zero-overhead container view for seamless switching between integer and bit representations.
+Ever wished you could have the convenience and compact storage of `std::vector<bool>` without all the [issues](http://www.gotw.ca/publications/N1211.pdf) and performance sacrifices?
+Then this is a library for you!
 
 ## Usage
+
+The actual data is stored in a standard integer container, such as `std::vector<int>`.
+Biswise operations are performed as usual on the original container.
+These operate on many bits in parallel and are optimized by the compiler.
+`bit_view::Container` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
+
+## API
 
 ```cpp
 #include <bit_view.h>
 #include <vector>
 
 int main() {
-  std::vector<char> container; // the container that stores the actual data
-  bit_view::Container bits(container); // any integer type is supported
-  bits.resizeToHold(10); // resize container to hold at least 10 bits
-  bits.size(); // the number of bits that the container can hold
-  bits.get(4); // get the ith bit
-  bits.set(4, 1); // set the ith bit
-  bits.forEach([](auto v, auto i){ ... }); // iterate over [value,index] pairs
+  std::vector<char> container; // the storage container with the actual data
+  bit_view::Container bits(container); // create a bitwise view into the container
+  bits.resizeToHold(10); // resize the container to store at least 10 bits
+  bits.size(); // the actual number of bits that the container can store
+  bits.get(8); // gets the ith bit
+  bits.set(8, 1); // sets the ith bit
+  bits.forEach([](auto value, auto index){ ... }); // iterate over all bits
 }
 ```
 
@@ -36,7 +45,7 @@ CPMAddPackage(
 )
 ```
 
-Alternatively use git submodules, install the library, or simply copy the header into your project. 
+Alternatively use git submodules, install globally, or simply download and copy the [header](include/bit_view.h) into your project.
 
 ## Benchmark
 
