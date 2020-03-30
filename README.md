@@ -41,7 +41,7 @@ BitView is a single header library the can be easily added via [CPM.cmake](https
 CPMAddPackage(
   NAME BitView
   GITHUB_REPOSITORY TheLartians/BitView
-  VERSION 1.2
+  VERSION 1.3
 )
 ```
 
