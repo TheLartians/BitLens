@@ -104,7 +104,7 @@ void bitwiseDifferenceBenchmark(benchmark::State &state) {
 }
 
 auto bitwiseDifferenceVectorBool =
-    bytewiseDifferenceBenchmark<bool, 10000>; // vector bool elements are
+    bytewiseDifferenceBenchmark<bool, 10000>; // vector bool values are
                                               // actually bits
 auto bitwiseDifferenceVectorChar = bitwiseDifferenceBenchmark<char, 10000>;
 auto bitwiseDifferenceVectorInt = bitwiseDifferenceBenchmark<int, 10000>;
