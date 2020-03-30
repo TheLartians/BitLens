@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 
-project(BitViewTests
+project(BitLensTests
   LANGUAGES CXX
 )
 
@@ -20,7 +20,7 @@ CPMAddPackage(
 )
 
 CPMAddPackage(
-  NAME BitView
+  NAME BitLens
   SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..
 )
 
@@ -32,24 +32,24 @@ CPMAddPackage(
 
 # ---- Create binary ----
 
-file(GLOB BitViewTests_sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
-add_executable(BitViewTests ${BitViewTests_sources})
-target_link_libraries(BitViewTests doctest BitView)
+file(GLOB BitLensTests_sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+add_executable(BitLensTests ${BitLensTests_sources})
+target_link_libraries(BitLensTests doctest BitLens)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-  set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-Wall -pedantic -Wextra -Werror")
+  set_target_properties(BitLensTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-Wall -pedantic -Wextra -Werror")
 else()
-  set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17)
+  set_target_properties(BitLensTests PROPERTIES CXX_STANDARD 17)
 endif()
 
-# ---- Add BitViewTests ----
+# ---- Add BitLensTests ----
 
 ENABLE_TESTING() 
-ADD_TEST(BitViewTests BitViewTests)
+ADD_TEST(BitLensTests BitLensTests)
 
 # ---- code coverage ----
 
 if (${ENABLE_TEST_COVERAGE})
-  set_target_properties(BitViewTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-O0 -g -fprofile-arcs -ftest-coverage --coverage")
-  target_link_options(BitViewTests PUBLIC "--coverage")
+  set_target_properties(BitLensTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-O0 -g -fprofile-arcs -ftest-coverage --coverage")
+  target_link_options(BitLensTests PUBLIC "--coverage")
 endif()

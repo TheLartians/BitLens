@@ -1,6 +1,6 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include <bit_view.h>
+#include <bit_lens.h>
 #include <bitset>
 #include <doctest/doctest.h>
 #include <type_traits>
@@ -9,13 +9,13 @@
 // an irregular test sequence
 auto pattern = [](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
 
-TEST_CASE_TEMPLATE("bit_view", T, unsigned char, unsigned short, unsigned int,
+TEST_CASE_TEMPLATE("bit_lens", T, unsigned char, unsigned short, unsigned int,
                    size_t) {
   std::vector<T> container;
-  bit_view::Container bits(container);
+  bit_lens::Lens bits(container);
   static_assert(std::is_same<typename decltype(bits)::Word, T>::value);
-  static_assert(bit_view::BITS_IN_BYTE >= 8);
-  const auto wordSize = sizeof(T) * bit_view::BITS_IN_BYTE;
+  static_assert(bit_lens::BITS_IN_BYTE >= 8);
+  const auto wordSize = sizeof(T) * bit_lens::BITS_IN_BYTE;
 
   SUBCASE("read bits") {
     container.resize(2);

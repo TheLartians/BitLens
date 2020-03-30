@@ -4,11 +4,11 @@
 #include <cstddef>
 #include <type_traits>
 
-namespace bit_view {
+namespace bit_lens {
 
 const size_t BITS_IN_BYTE = CHAR_BIT;
 
-template <class C> class Container {
+template <class C> class Lens {
 protected:
   C &container;
 
@@ -16,7 +16,7 @@ public:
   using Word = typename C::value_type;
   static const size_t WORD_SIZE = sizeof(Word) * BITS_IN_BYTE;
 
-  Container(C &c) : container(c) {
+  Lens(C &c) : container(c) {
     static_assert(std::is_integral<Word>::value &&
                       std::is_unsigned<Word>::value,
                   "only unsigned integer value types are supported");
@@ -69,4 +69,4 @@ public:
   }
 };
 
-} // namespace bit_view
+} // namespace bit_lens
