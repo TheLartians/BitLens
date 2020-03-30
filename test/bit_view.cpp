@@ -9,7 +9,8 @@
 // an irregular test sequence
 auto pattern = [](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
 
-TEST_CASE_TEMPLATE("bit_view", T, char, int, unsigned, size_t) {
+TEST_CASE_TEMPLATE("bit_view", T, unsigned char, unsigned short, unsigned int,
+                   size_t) {
   std::vector<T> container;
   bit_view::Container bits(container);
   static_assert(std::is_same<typename decltype(bits)::Word, T>::value);

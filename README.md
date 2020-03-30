@@ -41,7 +41,7 @@ BitView is a single header library the can be easily added via [CPM.cmake](https
 CPMAddPackage(
   NAME BitView
   GITHUB_REPOSITORY TheLartians/BitView
-  VERSION 1.2
+  VERSION 1.3
 )
 ```
 
@@ -63,15 +63,15 @@ As an example, a 2018 mac notebook, the benchmark produced the following output.
 ------------------------------------------------------------------------
 Benchmark                              Time             CPU   Iterations
 ------------------------------------------------------------------------
-bitwiseRandomAccessVectorBool    1042500 ns      1041887 ns          627
-bitwiseRandomAccessVectorChar     861703 ns       857346 ns          815
-bitwiseRandomAccessVectorInt      840315 ns       836922 ns          816
-bitwiseDifferenceVectorBool       543340 ns       542516 ns         1194
-bitwiseDifferenceVectorChar       138846 ns       138745 ns         4795
-bitwiseDifferenceVectorInt        164660 ns       164364 ns         4790
-bytewiseDifferenceVectorChar        8654 ns         8628 ns        81478
-bytewiseDifferenceVectorInt          451 ns          450 ns      1543959
-bytewiseDifferenceVectorSizeT        463 ns          460 ns      1563275
+bitwiseRandomAccessVectorBool    1110850 ns      1106066 ns          625
+bitwiseRandomAccessVectorChar     829747 ns       828204 ns          788
+bitwiseRandomAccessVectorInt      815876 ns       814413 ns          791
+bitwiseDifferenceVectorBool       517632 ns       515011 ns         1000
+bitwiseDifferenceVectorChar       152281 ns       152097 ns         4171
+bitwiseDifferenceVectorInt        161656 ns       161367 ns         4278
+bytewiseDifferenceVectorChar        8435 ns         8405 ns        81414
+bytewiseDifferenceVectorInt          438 ns          437 ns      1563446
+bytewiseDifferenceVectorSizeT        423 ns          423 ns      1598141
 ```
 
 We can see that for integer containers even random access bitwise operations are slightly faster than `vector<bool>`, bitwise iteration is at least twice the speed, while bytewise operations outperform `vector<bool>` by an order of magnitude.
