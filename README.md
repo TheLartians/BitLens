@@ -41,7 +41,7 @@ BitView is a single header library the can be easily added via [CPM.cmake](https
 CPMAddPackage(
   NAME BitView
   GITHUB_REPOSITORY TheLartians/BitView
-  VERSION 1.1.1
+  VERSION 1.2
 )
 ```
 
@@ -63,15 +63,15 @@ As an example, a 2018 mac notebook, the benchmark produced the following output.
 ------------------------------------------------------------------------
 Benchmark                              Time             CPU   Iterations
 ------------------------------------------------------------------------
-bitwiseRandomAccessVectorBool     810308 ns       809719 ns          796
-bitwiseRandomAccessVectorChar     771897 ns       771729 ns          812
-bitwiseRandomAccessVectorInt      808383 ns       806926 ns          849
-bitwiseDifferenceVectorBool       504596 ns       503681 ns         1000
-bitwiseDifferenceVectorChar       258595 ns       258122 ns         2538
-bitwiseDifferenceVectorInt        163740 ns       163499 ns         5670
-bytewiseDifferenceVectorChar        8504 ns         8490 ns        81615
-bytewiseDifferenceVectorInt          459 ns          457 ns      1554581
-bytewiseDifferenceVectorSizeT        442 ns          442 ns      1553743
+bitwiseRandomAccessVectorBool    1042500 ns      1041887 ns          627
+bitwiseRandomAccessVectorChar     861703 ns       857346 ns          815
+bitwiseRandomAccessVectorInt      840315 ns       836922 ns          816
+bitwiseDifferenceVectorBool       543340 ns       542516 ns         1194
+bitwiseDifferenceVectorChar       138846 ns       138745 ns         4795
+bitwiseDifferenceVectorInt        164660 ns       164364 ns         4790
+bytewiseDifferenceVectorChar        8654 ns         8628 ns        81478
+bytewiseDifferenceVectorInt          451 ns          450 ns      1543959
+bytewiseDifferenceVectorSizeT        463 ns          460 ns      1563275
 ```
 
-We can see that while for bitwise random access there is no difference between `vector<bool>` and integer vector types, bitwise iteration is at least twice the speed, while bytewise operations outperform `vector<bool>` by an order of magnitude.
+We can see that for integer containers even random access bitwise operations are slightly faster than `vector<bool>`, bitwise iteration is at least twice the speed, while bytewise operations outperform `vector<bool>` by an order of magnitude.

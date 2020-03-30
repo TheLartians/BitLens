@@ -46,13 +46,17 @@ public:
   /**
    * sets the value of the `i`th bit
    */
-  void set(size_t i, bool v) {
+  void set(size_t i, Word v) {
     Word offset = i % WORD_SIZE;
-    if (v) {
-      container[i / WORD_SIZE] |= Word(1) << offset;
-    } else {
-      container[i / WORD_SIZE] &= ~(Word(1) << offset);
-    }
+    const size_t index = i / WORD_SIZE;
+    container[index] =
+        (container[index] & ~(Word(1) << offset)) | (v << offset);
+
+    // if (v) {
+    //   container[i / WORD_SIZE] |= Word(1) << offset;
+    // } else {
+    //   container[i / WORD_SIZE] &= ~(Word(1) << offset);
+    // }
   }
 
   /**

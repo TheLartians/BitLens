@@ -7,8 +7,10 @@
 template <class T> auto createRandomData(size_t bytes) {
   std::vector<T> array;
   if (std::is_same<T, bool>::value) {
+    // vector<bool> stores only a single bit per entry
     array.resize(bytes * CHAR_BIT);
   } else {
+    // a regular vector<T> can store sizeof(T) bytes per entry
     auto offset = bytes % sizeof(T) == 0 ? 0 : 1;
     array.resize(bytes / sizeof(T) + offset);
   }
@@ -30,6 +32,8 @@ void bitwiseRandomAccessBenchmark(benchmark::State &state) {
   auto b = createRandomData<T>(N);
   auto c = createRandomData<T>(N);
   auto va = bit_view::Container(a);
+  auto vb = bit_view::Container(b);
+  auto vc = bit_view::Container(c);
   auto gen = std::bind(std::uniform_int_distribution<size_t>(0, N - 1),
                        std::default_random_engine());
   for (auto _ : state) {
