@@ -11,7 +11,7 @@ Then this is a library for you!
 
 ## Usage
 
-The actual data is stored in an unsinged integral container, such as `std::vector<unsigned int>`.
+The actual data is stored in an unsigned integral container, such as `std::vector<unsigned int>`.
 Biswise operations are performed as usual on the original container.
 These operate on many bits in parallel and are optimized by the compiler.
 `bit_view::Container` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
