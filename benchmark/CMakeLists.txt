@@ -2,19 +2,19 @@ cmake_minimum_required (VERSION 3.14)
 
 # ---- create project ----
 
-project(BitViewBenchmark 
+project(BitLensBenchmark 
   LANGUAGES CXX
 )
 
-add_executable(BitViewBenchmark "benchmark.cpp")
-set_target_properties(BitViewBenchmark PROPERTIES CXX_STANDARD 17)        
+add_executable(BitLensBenchmark "benchmark.cpp")
+set_target_properties(BitLensBenchmark PROPERTIES CXX_STANDARD 17)        
 
 # ---- Dependencies ----
 
 include(../cmake/CPM.cmake)
 
 CPMAddPackage(
-  NAME BitView
+  NAME BitLens
   SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..
 )
 
@@ -29,4 +29,4 @@ CPMAddPackage(
 
 # patch google benchmark target
 set_target_properties(benchmark PROPERTIES CXX_STANDARD 17)        
-target_link_libraries(BitViewBenchmark benchmark BitView)
+target_link_libraries(BitLensBenchmark benchmark BitLens)

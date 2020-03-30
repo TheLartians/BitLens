@@ -1,11 +1,11 @@
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/MacOS/badge.svg)](https://github.com/TheLartians/BitView/actions)
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/Windows/badge.svg)](https://github.com/TheLartians/BitView/actions)
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/BitView/actions)
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/Style/badge.svg)](https://github.com/TheLartians/BitView/actions)
+[![Actions Status](https://github.com/TheLartians/BitLens/workflows/MacOS/badge.svg)](https://github.com/TheLartians/BitLens/actions)
+[![Actions Status](https://github.com/TheLartians/BitLens/workflows/Windows/badge.svg)](https://github.com/TheLartians/BitLens/actions)
+[![Actions Status](https://github.com/TheLartians/BitLens/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/BitLens/actions)
+[![Actions Status](https://github.com/TheLartians/BitLens/workflows/Style/badge.svg)](https://github.com/TheLartians/BitLens/actions)
 
-# BitView
+# BitLens
 
-A zero-overhead container view for seamless switching between integer and bit representations.
+A zero-overhead container wrapper for seamless switching between integer and bit representations.
 Ever wished you could have the convenience and compact storage of `std::vector<bool>` without all the [issues](http://www.gotw.ca/publications/N1211.pdf) and performance sacrifices?
 Then this is a library for you!
 
@@ -14,17 +14,17 @@ Then this is a library for you!
 The actual data is stored in an unsigned integral container, such as `std::vector<unsigned int>`.
 Biswise operations are performed as usual on the original container.
 These operate on many bits in parallel and are optimized by the compiler.
-`bit_view::Container` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
+`bit_lens::Lens` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
 
 ## API
 
 ```cpp
-#include <bit_view.h>
+#include <bit_lens.h>
 #include <vector>
 
 int main() {
   std::vector<unsigned char> container; // the storage container with the actual data
-  bit_view::Container bits(container); // create a bitwise view into the container
+  bit_lens::Lens bits(container); // create a bitwise lens into the container
   bits.resizeToHold(10); // resize the container to store at least 10 bits
   bits.size(); // the actual number of bits that the container can store
   bits.get(8); // gets the ith bit
@@ -35,17 +35,17 @@ int main() {
 
 ## Integration
 
-BitView is a single header library the can be easily added via [CPM.cmake](https://github.com/TheLartians/CPM.cmake).
+BitLens is a single header library the can be easily added via [CPM.cmake](https://github.com/TheLartians/CPM.cmake).
 
 ```cmake
 CPMAddPackage(
-  NAME BitView
-  GITHUB_REPOSITORY TheLartians/BitView
-  VERSION 1.3
+  NAME BitLens
+  GITHUB_REPOSITORY TheLartians/BitLens
+  VERSION 1.4
 )
 ```
 
-Alternatively use git submodules, install globally, or simply download and copy the [header](include/bit_view.h) into your project.
+Alternatively use git submodules, install globally, or simply download and copy the [header](include/bit_lens.h) into your project.
 
 ## Benchmark
 
@@ -54,10 +54,10 @@ To illustrate the performance difference between `vector<bool>` and other contai
 ```bash
 cmake -Hbenchmark -Bbuild/bench -DCMAKE_BUILD_TYPE=Release
 cmake --build build/bench -j8
-./build/bench/BitViewBenchmark
+./build/bench/BitLensBenchmark
 ```
 
-As an example, a 2018 mac notebook, the benchmark produced the following output.
+As an example, on a 2018 mac notebook, the benchmark produced the following output.
 
 ```
 ------------------------------------------------------------------------
@@ -74,4 +74,4 @@ bytewiseDifferenceVectorInt          438 ns          437 ns      1563446
 bytewiseDifferenceVectorSizeT        423 ns          423 ns      1598141
 ```
 
-We can see that for integer containers even random access bitwise operations are slightly faster than `vector<bool>`, bitwise iteration is at least twice the speed, while bytewise operations outperform `vector<bool>` by an order of magnitude.
+We can see that for integer containers even random access bitwise operations are slightly faster than `vector<bool>`, bitwise iteration is at least twice the speed, while bytewise operations outperform `vector<bool>` by orders of magnitude.
