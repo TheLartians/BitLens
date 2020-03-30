@@ -2,6 +2,7 @@
 
 #include <climits>
 #include <cstddef>
+#include <type_traits>
 
 namespace bit_view {
 
@@ -15,7 +16,11 @@ public:
   using Word = typename C::value_type;
   static const size_t WORD_SIZE = sizeof(Word) * BITS_IN_BYTE;
 
-  Container(C &c) : container(c) {}
+  Container(C &c) : container(c) {
+    static_assert(std::is_integral<Word>::value &&
+                      std::is_unsigned<Word>::value,
+                  "only unsigned integer value types are supported");
+  }
 
   /**
    * returns the number of bits in the container
@@ -46,11 +51,11 @@ public:
   /**
    * sets the value of the `i`th bit
    */
-  void set(size_t i, Word v) {
+  void set(size_t i, bool v) {
     Word offset = i % WORD_SIZE;
     const size_t index = i / WORD_SIZE;
     container[index] =
-        (container[index] & ~(Word(1) << offset)) | (v << offset);
+        (container[index] & ~(Word(1) << offset)) | (Word(v) << offset);
   }
 
   /**

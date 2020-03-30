@@ -10,7 +10,7 @@ template <class T> auto createRandomData(size_t bytes) {
     // vector<bool> stores only a single bit per entry
     array.resize(bytes * CHAR_BIT);
   } else {
-    // a regular vector<T> can store sizeof(T) bytes per entry
+    // avector<T> can store sizeof(T) bytes per entry
     auto offset = bytes % sizeof(T) == 0 ? 0 : 1;
     array.resize(bytes / sizeof(T) + offset);
   }
@@ -49,8 +49,10 @@ void bitwiseRandomAccessBenchmark(benchmark::State &state) {
 }
 
 auto bitwiseRandomAccessVectorBool = bitwiseRandomAccessBenchmark<bool, 10000>;
-auto bitwiseRandomAccessVectorChar = bitwiseRandomAccessBenchmark<char, 10000>;
-auto bitwiseRandomAccessVectorInt = bitwiseRandomAccessBenchmark<int, 10000>;
+auto bitwiseRandomAccessVectorChar =
+    bitwiseRandomAccessBenchmark<unsigned char, 10000>;
+auto bitwiseRandomAccessVectorInt =
+    bitwiseRandomAccessBenchmark<unsigned int, 10000>;
 
 BENCHMARK(bitwiseRandomAccessVectorBool);
 BENCHMARK(bitwiseRandomAccessVectorChar);
@@ -104,12 +106,16 @@ void bitwiseDifferenceBenchmark(benchmark::State &state) {
 }
 
 auto bitwiseDifferenceVectorBool =
-    bytewiseDifferenceBenchmark<bool, 10000>; // vector bool values are
+    bytewiseDifferenceBenchmark<bool, 10000>; // vector bool elements are
                                               // actually bits
-auto bitwiseDifferenceVectorChar = bitwiseDifferenceBenchmark<char, 10000>;
-auto bitwiseDifferenceVectorInt = bitwiseDifferenceBenchmark<int, 10000>;
-auto bytewiseDifferenceVectorChar = bytewiseDifferenceBenchmark<char, 10000>;
-auto bytewiseDifferenceVectorInt = bytewiseDifferenceBenchmark<int, 10000>;
+auto bitwiseDifferenceVectorChar =
+    bitwiseDifferenceBenchmark<unsigned char, 10000>;
+auto bitwiseDifferenceVectorInt =
+    bitwiseDifferenceBenchmark<unsigned int, 10000>;
+auto bytewiseDifferenceVectorChar =
+    bytewiseDifferenceBenchmark<unsigned char, 10000>;
+auto bytewiseDifferenceVectorInt =
+    bytewiseDifferenceBenchmark<unsigned int, 10000>;
 auto bytewiseDifferenceVectorSizeT = bytewiseDifferenceBenchmark<size_t, 10000>;
 
 BENCHMARK(bitwiseDifferenceVectorBool);
