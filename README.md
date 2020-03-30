@@ -1,7 +1,7 @@
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/MacOS/badge.svg)](https://github.com/TheLartians/CPM.cmake/actions)
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/Windows/badge.svg)](https://github.com/TheLartians/CPM.cmake/actions)
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/CPM.cmake/actions)
-[![Actions Status](https://github.com/TheLartians/BitView/workflows/Style/badge.svg)](https://github.com/TheLartians/CPM.cmake/actions)
+[![Actions Status](https://github.com/TheLartians/BitView/workflows/MacOS/badge.svg)](https://github.com/TheLartians/BitView/actions)
+[![Actions Status](https://github.com/TheLartians/BitView/workflows/Windows/badge.svg)](https://github.com/TheLartians/BitView/actions)
+[![Actions Status](https://github.com/TheLartians/BitView/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/BitView/actions)
+[![Actions Status](https://github.com/TheLartians/BitView/workflows/Style/badge.svg)](https://github.com/TheLartians/BitView/actions)
 
 # BitView
 
@@ -11,7 +11,7 @@ Then this is a library for you!
 
 ## Usage
 
-The actual data is stored in a standard integer container, such as `std::vector<int>`.
+The actual data is stored in an unsigned integral container, such as `std::vector<unsigned int>`.
 Biswise operations are performed as usual on the original container.
 These operate on many bits in parallel and are optimized by the compiler.
 `bit_view::Container` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
@@ -23,7 +23,7 @@ These operate on many bits in parallel and are optimized by the compiler.
 #include <vector>
 
 int main() {
-  std::vector<char> container; // the storage container with the actual data
+  std::vector<unsigned char> container; // the storage container with the actual data
   bit_view::Container bits(container); // create a bitwise view into the container
   bits.resizeToHold(10); // resize the container to store at least 10 bits
   bits.size(); // the actual number of bits that the container can store
