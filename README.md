@@ -46,7 +46,7 @@ BitLens is a single header library the can be easily added via [CPM.cmake](https
 CPMAddPackage(
   NAME BitLens
   GITHUB_REPOSITORY TheLartians/BitLens
-  VERSION 2.0
+  VERSION 2.1
 )
 ```
 
