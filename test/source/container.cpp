@@ -7,7 +7,7 @@
 
 TEST_CASE_TEMPLATE("bit container", T, std::vector<unsigned char>,
                    std::vector<size_t>, std::deque<size_t>) {
-  bit_lens::Container<T> container;
+  bit_lens::BitContainer<T> container;
   container.resize(1000, 1);
   CHECK(container.size() >= 100);
   CHECK(container.data().size() ==

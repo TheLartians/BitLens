@@ -22,7 +22,7 @@ TEST_CASE_TEMPLATE("bit reference", T, unsigned char, unsigned short,
     std::bitset<sizeof(T)> bits;
     for (size_t i = 0; i < bits.size(); ++i) {
       if (setBits) {
-        bit_lens::Reference reference(value, i);
+        bit_lens::BitReference reference(value, i);
         reference = pattern(i);
       } else {
         bits[i] = pattern(i);
@@ -32,15 +32,15 @@ TEST_CASE_TEMPLATE("bit reference", T, unsigned char, unsigned short,
       value = bits.to_ullong();
     }
     for (size_t i = 0; i < bits.size(); ++i) {
-      bit_lens::Reference reference(value, i);
+      bit_lens::BitReference reference(value, i);
       CHECK(reference == pattern(i));
     }
   }
 
   SUBCASE("constexpr") {
     constexpr T value = 0b110;
-    static_assert(!bool(bit_lens::Reference(value, 0)));
-    static_assert(bool(bit_lens::Reference(value, 1)));
-    static_assert(bool(bit_lens::Reference(value, 2)));
+    static_assert(!bool(bit_lens::BitReference(value, 0)));
+    static_assert(bool(bit_lens::BitReference(value, 1)));
+    static_assert(bool(bit_lens::BitReference(value, 2)));
   }
 }

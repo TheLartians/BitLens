@@ -11,7 +11,7 @@ auto pattern = [](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
 TEST_CASE_TEMPLATE("bit lens", T, unsigned char, unsigned short, unsigned int,
                    size_t) {
   std::vector<T> container;
-  bit_lens::Lens bits(container);
+  bit_lens::BitLens bits(container);
   static_assert(std::is_same<typename decltype(bits)::Word, T>::value);
   constexpr auto wordSize = bit_lens::WordSize<T>::value;
   static_assert(wordSize == sizeof(T) * CHAR_BIT);

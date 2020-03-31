@@ -31,9 +31,9 @@ void bitwiseRandomAccessBenchmark(benchmark::State &state) {
   auto a = createRandomData<T>(N);
   auto b = createRandomData<T>(N);
   auto c = createRandomData<T>(N);
-  auto va = bit_lens::Lens(a);
-  auto vb = bit_lens::Lens(b);
-  auto vc = bit_lens::Lens(c);
+  auto va = bit_lens::BitLens(a);
+  auto vb = bit_lens::BitLens(b);
+  auto vc = bit_lens::BitLens(c);
   auto gen = std::bind(std::uniform_int_distribution<size_t>(0, N - 1),
                        std::default_random_engine());
   for (auto _ : state) {
@@ -70,9 +70,9 @@ template <class T> auto bytewiseDifference(const T &a, const T &b) {
 
 template <class T> auto bitwiseDifference(const T &a, const T &b) {
   T c;
-  auto va = bit_lens::Lens(a);
-  auto vb = bit_lens::Lens(b);
-  auto vc = bit_lens::Lens(c);
+  auto va = bit_lens::BitLens(a);
+  auto vb = bit_lens::BitLens(b);
+  auto vc = bit_lens::BitLens(c);
   auto N = va.size();
   vc.resizeToHold(N);
   for (size_t i = 0; i < N; ++i) {

@@ -15,13 +15,13 @@ template <class Word> struct WordSize {
 /*
  * A reference for a single bit
  */
-template <class Word> class Reference {
+template <class Word> class BitReference {
 private:
   size_t offset;
   Word &value;
 
 public:
-  constexpr Reference(Word &v, size_t o) noexcept : offset(o), value(v) {
+  constexpr BitReference(Word &v, size_t o) noexcept : offset(o), value(v) {
     static_assert(std::is_integral<Word>::value &&
                       std::is_unsigned<Word>::value,
                   "only unsigned integer value types are supported");
@@ -31,94 +31,99 @@ public:
     return (value >> offset) & Word(1);
   }
 
-  Reference &operator=(bool v) noexcept {
+  BitReference &operator=(bool v) noexcept {
     value = (value & ~(Word(1) << offset)) | (Word(v) << offset);
     return *this;
   }
 
-  Reference &operator=(const Reference &v) noexcept { return *this = bool(v); }
+  BitReference &operator=(const BitReference &v) noexcept {
+    return *this = bool(v);
+  }
 };
 
 /**
  * Swaps only the referenced bit
  */
-template <class Word> void swap(Reference<Word> &a, Reference<Word> &b) {
+template <class Word> void swap(BitReference<Word> &a, BitReference<Word> &b) {
   bool tmp = a;
   a = b;
   b = tmp;
 }
 
-template <class Iterator> struct IteratorWord {
-  using type = typename std::decay<decltype(*std::declval<Iterator>())>::type;
-};
-
-template <class ContainerIterator>
-class Iterator
-    : public std::iterator<
-          std::random_access_iterator_tag,
-          Reference<typename IteratorWord<ContainerIterator>::type>, size_t> {
+template <class ContainerIterator> class BitIterator {
 private:
-  using Word = typename IteratorWord<ContainerIterator>::type;
+  using Word =
+      typename std::decay<decltype(*std::declval<ContainerIterator>())>::type;
   static constexpr auto WORD_SIZE = WordSize<Word>::value;
   ContainerIterator iterator;
   size_t index;
 
 public:
-  constexpr Iterator(ContainerIterator i, size_t o) noexcept
+  using iterator_category = std::random_access_iterator_tag;
+  using value_type = BitReference<Word>;
+  using difference_type = size_t;
+  using reference = value_type;
+
+  constexpr BitIterator(ContainerIterator i, size_t o) noexcept
       : iterator(i), index(o) {}
 
-  Iterator &operator++(int) noexcept {
-    Iterator copy(*this);
+  BitIterator &operator++(int) noexcept {
+    BitIterator copy(*this);
     index++;
     return copy;
   }
 
-  Iterator operator++() noexcept {
+  BitIterator operator++() noexcept {
     ++index;
     return *this;
   }
 
-  Iterator &operator--(int) noexcept {
-    Iterator copy(*this);
+  BitIterator &operator--(int) noexcept {
+    BitIterator copy(*this);
     index--;
     return copy;
   }
 
-  Iterator operator--() noexcept {
+  BitIterator operator--() noexcept {
     --index;
     return *this;
   }
 
-  Iterator operator+(int n) noexcept { return Iterator(iterator, index + n); }
-  Iterator operator-(int n) noexcept { return Iterator(iterator, index - n); }
+  BitIterator operator+(int n) noexcept {
+    return BitIterator(iterator, index + n);
+  }
+  BitIterator operator-(int n) noexcept {
+    return BitIterator(iterator, index - n);
+  }
 
-  size_t operator-(const Iterator &other) noexcept {
+  size_t operator-(const BitIterator &other) noexcept {
     return index - other.index;
   }
 
-  constexpr bool operator!=(const Iterator &other) const {
+  constexpr bool operator!=(const BitIterator &other) const {
     return iterator != other.iterator || index != other.index;
   }
 
-  constexpr bool operator==(const Iterator &other) const {
+  constexpr bool operator==(const BitIterator &other) const {
     return iterator == other.iterator && index == other.index;
   }
 
-  constexpr Reference<Word> operator*() const noexcept {
-    return Reference<Word>(*(iterator + index / WORD_SIZE), index % WORD_SIZE);
+  constexpr BitReference<Word> operator*() const noexcept {
+    return BitReference<Word>(*(iterator + index / WORD_SIZE),
+                              index % WORD_SIZE);
   }
 };
 
-template <class Container> class Lens {
+template <class BitContainer> class BitLens {
 private:
-  Container &container;
+  BitContainer &container;
 
 public:
   using Word =
-      typename std::decay<decltype(std::declval<Container>()[0])>::type;
+      typename std::decay<decltype(std::declval<BitContainer>()[0])>::type;
   static constexpr auto WORD_SIZE = WordSize<Word>::value;
 
-  constexpr Lens(Container &c) noexcept : container(c) {}
+  constexpr BitLens(BitContainer &c) noexcept : container(c) {}
 
   /**
    * returns the number of bits that fit in the container
@@ -144,38 +149,39 @@ public:
   }
 
   /**
-   * returns a Reference to the bit at position `i`.
+   * returns a BitReference to the bit at position `i`.
    */
-  constexpr Reference<Word> operator[](size_t i) const
+  constexpr BitReference<Word> operator[](size_t i) const
       noexcept(noexcept(container[0])) {
     Word offset = i % WORD_SIZE;
-    return Reference<Word>(container[i / WORD_SIZE], offset);
+    return BitReference<Word>(container[i / WORD_SIZE], offset);
   }
 
   [[deprecated("legacy API: use `[i]` insted")]] bool get(size_t i) const
-      noexcept(noexcept(std::declval<Lens<Container>>()[i])) {
+      noexcept(noexcept(std::declval<BitLens<BitContainer>>()[i])) {
     return (*this)[i];
   }
 
   [[deprecated("legacy API: use `[i] = v` insted")]] void
-  set(size_t i, bool v) noexcept(noexcept(std::declval<Lens<Container>>()[i])) {
+  set(size_t i,
+      bool v) noexcept(noexcept(std::declval<BitLens<BitContainer>>()[i])) {
     (*this)[i] = v;
   }
 
   constexpr auto begin() noexcept(noexcept(container.begin())) {
-    return Iterator(container.begin(), 0);
+    return BitIterator(container.begin(), 0);
   }
 
   constexpr auto end() noexcept(noexcept(container.begin())) {
-    return Iterator(container.begin(), size());
+    return BitIterator(container.begin(), size());
   }
 
   constexpr auto begin() const noexcept(noexcept(container.begin())) {
-    return Iterator(container.begin(), 0);
+    return BitIterator(container.begin(), 0);
   }
 
   constexpr auto end() const noexcept(noexcept(container.begin())) {
-    return Iterator(container.begin(), size());
+    return BitIterator(container.begin(), size());
   }
 
   //  [[deprecated("legacy API: use iterators instead")]]
@@ -188,24 +194,32 @@ public:
 };
 
 /**
+ * Legacy API
+ * @deprecated Use BitLens instead
+ */
+template <class BitContainer> using Lens = BitLens<BitContainer>;
+
+/**
  * creates a bitlens that owns its data
  */
-template <class C> class Container : public Lens<C> {
+template <class C> class BitContainer : public BitLens<C> {
 private:
   C dataContainer;
 
 public:
-  constexpr Container() noexcept(noexcept(C())) : Lens<C>(dataContainer) {}
-  constexpr Container(const Container &other) noexcept(
+  constexpr BitContainer() noexcept(noexcept(C()))
+      : BitLens<C>(dataContainer) {}
+  constexpr BitContainer(const BitContainer &other) noexcept(
       noexcept(C(std::declval<const C &>())))
-      : dataContainer(other.data()), Lens<C>(dataContainer) {}
-  constexpr Container(Container &&other) noexcept(
+      : dataContainer(other.data()), BitLens<C>(dataContainer) {}
+  constexpr BitContainer(BitContainer &&other) noexcept(
       noexcept(C(std::declval<C &&>())))
-      : dataContainer(std::move(other.data())), Lens<C>(dataContainer) {}
+      : dataContainer(std::move(other.data())), BitLens<C>(dataContainer) {}
 
   template <typename... Args>
-  Container(Args &&... args)
-      : dataContainer(std::forward<Args...>(args...)), Lens<C>(dataContainer) {}
+  BitContainer(Args &&... args)
+      : dataContainer(std::forward<Args...>(args...)), BitLens<C>(
+                                                           dataContainer) {}
 
   /**
    *  get the underlying data container

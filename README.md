@@ -14,7 +14,7 @@ Then this is a library for you!
 The actual data is stored in an unsigned integral container, such as `std::vector<unsigned int>`.
 Biswise operations are performed as usual on the original container.
 These operate on many bits in parallel and are optimized by the compiler.
-`bit_lens::Lens` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
+`bit_lens::BitLens` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
 
 ## API
 
@@ -24,7 +24,7 @@ These operate on many bits in parallel and are optimized by the compiler.
 
 int main() {
   std::vector<unsigned char> container; // the storage container with the actual data
-  bit_lens::Lens bits(container); // create a bitwise lens into the container
+  bit_lens::BitLens bits(container); // create a bitwise lens into the container
   bits.resizeToHold(10); // resize the container to store at least 10 bits
   bits.size(); // the actual number of bits that the container can store
   bits.get(8); // gets the ith bit

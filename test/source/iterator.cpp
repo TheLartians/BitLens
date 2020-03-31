@@ -5,7 +5,7 @@
 
 TEST_CASE_TEMPLATE("bit iterator", T, unsigned char, unsigned short,
                    unsigned int, size_t) {
-  bit_lens::Container<std::vector<T>> container;
+  bit_lens::BitContainer<std::vector<T>> container;
   CHECK(container.begin() == container.end());
   container.resize(100, 0);
   CHECK(container.begin() != container.end());
