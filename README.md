@@ -25,11 +25,14 @@ These operate on many bits in parallel and are optimized by the compiler.
 int main() {
   std::vector<unsigned char> container; // the storage container with the actual data
   bit_lens::BitLens bits(container); // create a bitwise lens into the container
-  bits.resizeToHold(10); // resize the container to store at least 10 bits
+  // bit_lens::BitContainer<std::vector<unsigned char>> // alternative: create an owning container
+  bits.resize(10); // resize the container to store at least 10 bits
   bits.size(); // the actual number of bits that the container can store
-  bits.get(8); // gets the ith bit
-  bits.set(8, 1); // sets the ith bit
-  bits.forEach([](auto value, auto index){ ... }); // iterate over all bits
+  bits[8];// gets the ith bit
+  bits[8] = 1; // sets the ith bit
+  for (auto bit: bits) { bit = 1; } // iterate over all bits
+  std::count(container.begin(), container.end(), true); // <algorithm> compatible iterators
+  for (auto &v: bits.data()) { v &= 0b1101; } // access the underlying container to efficiently perform bitwise bulk operations
 }
 ```
 

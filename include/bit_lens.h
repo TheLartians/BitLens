@@ -100,15 +100,15 @@ namespace bit_lens {
     }
   };
 
-  template <class BitContainer> class BitLens {
+  template <class Container> class BitLens {
   private:
-    BitContainer &container;
+    Container &container;
 
   public:
-    using Word = typename std::remove_reference<decltype(std::declval<BitContainer>()[0])>::type;
+    using Word = typename std::remove_reference<decltype(std::declval<Container>()[0])>::type;
     static constexpr auto WORD_SIZE = WordSize<Word>::value;
 
-    constexpr BitLens(BitContainer &c) noexcept : container(c) {}
+    constexpr BitLens(Container &c) noexcept : container(c) {}
 
     /**
      * returns the number of bits that fit in the container
@@ -147,12 +147,12 @@ namespace bit_lens {
     }
 
     [[deprecated("legacy API: use `[i]` insted")]] bool get(size_t i) const
-        noexcept(noexcept(std::declval<BitLens<BitContainer>>()[i])) {
+        noexcept(noexcept(std::declval<BitLens<Container>>()[i])) {
       return (*this)[i];
     }
 
     [[deprecated("legacy API: use `[i] = v` insted")]] void set(size_t i, bool v) noexcept(
-        noexcept(std::declval<BitLens<BitContainer>>()[i])) {
+        noexcept(std::declval<BitLens<Container>>()[i])) {
       (*this)[i] = v;
     }
 
@@ -172,13 +172,22 @@ namespace bit_lens {
       return BitIterator(container.begin(), size());
     }
 
-    //  [[deprecated("legacy API: use iterators instead")]]
-    template <class F> void forEach(F &&f) {
+    template <class F>[[deprecated("legacy API: use iterators instead")]] void forEach(F &&f) {
       size_t N = size();
       for (size_t idx = 0; idx != N; ++idx) {
         f((*this)[idx], idx);
       }
     }
+
+    /**
+     *  get the underlying data container
+     */
+    Container &data() noexcept { return container; }
+
+    /**
+     *  get the underlying data container
+     */
+    const Container &data() const noexcept { return container; }
   };
 
   /**
@@ -204,16 +213,6 @@ namespace bit_lens {
 
     template <typename... Args> BitContainer(Args &&... args)
         : dataContainer(std::forward<Args...>(args...)), BitLens<C>(dataContainer) {}
-
-    /**
-     *  get the underlying data container
-     */
-    C &data() noexcept { return dataContainer; }
-
-    /**
-     *  get the underlying data container
-     */
-    const C &data() const noexcept { return dataContainer; }
   };
 
 }  // namespace bit_lens
