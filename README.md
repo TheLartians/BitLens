@@ -46,13 +46,13 @@ BitLens is a single header library the can be easily added via [CPM.cmake](https
 CPMAddPackage(
   NAME BitLens
   GITHUB_REPOSITORY TheLartians/BitLens
-  VERSION 2.0
+  VERSION 2.1
 )
 ```
 
 Alternatively use git submodules, install globally, or simply download and copy the [header](include/bit_lens.h) into your project.
 
-## Performance comparison to `vector<bool>`
+## Benchmark
 
 To illustrate the performance difference between `vector<bool>` and other container types, this repository contains a benchmark suite than  can be run through the following commands.
 
