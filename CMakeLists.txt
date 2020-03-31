@@ -15,7 +15,7 @@ endif()
 
 # ---- Make headers visible in IDEs ----
 
-FILE(GLOB headers "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
+FILE(GLOB_RECURSE headers "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
 add_library(BitLensHeaders EXCLUDE_FROM_ALL ${headers})
 SET_TARGET_PROPERTIES(BitLensHeaders PROPERTIES LINKER_LANGUAGE CXX)
 

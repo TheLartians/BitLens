@@ -25,6 +25,12 @@ CPMAddPackage(
 )
 
 CPMAddPackage(
+  NAME EasyIterator
+  VERSION 1.2
+  GIT_REPOSITORY https://github.com/TheLartians/EasyIterator.git
+)
+
+CPMAddPackage(
   NAME Format.cmake
   GITHUB_REPOSITORY TheLartians/Format.cmake
   VERSION 1.0
@@ -32,9 +38,9 @@ CPMAddPackage(
 
 # ---- Create binary ----
 
-file(GLOB BitLensTests_sources ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB BitLensTests_sources ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 add_executable(BitLensTests ${BitLensTests_sources})
-target_link_libraries(BitLensTests doctest BitLens)
+target_link_libraries(BitLensTests doctest BitLens EasyIterator)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set_target_properties(BitLensTests PROPERTIES CXX_STANDARD 17 COMPILE_FLAGS "-Wall -pedantic -Wextra -Werror")
