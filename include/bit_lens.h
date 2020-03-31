@@ -67,18 +67,29 @@ public:
   constexpr Iterator(ContainerIterator i, size_t o) noexcept
       : iterator(i), index(o) {}
 
-  Iterator operator++() noexcept {
-    ++index;
-    return Iterator(iterator, index + 1);
+  Iterator &operator++(int) noexcept {
+    Iterator copy(*this);
+    index++;
+    return copy;
   }
 
-  Iterator &operator++(int n) noexcept {
-    index++(n);
+  Iterator operator++() noexcept {
+    ++index;
+    return *this;
+  }
+
+  Iterator &operator--(int) noexcept {
+    Iterator copy(*this);
+    index--;
+    return copy;
+  }
+
+  Iterator operator--() noexcept {
+    --index;
     return *this;
   }
 
   Iterator operator+(int n) noexcept { return Iterator(iterator, index + n); }
-
   Iterator operator-(int n) noexcept { return Iterator(iterator, index - n); }
 
   size_t operator-(const Iterator &other) noexcept {
