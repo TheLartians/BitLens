@@ -21,6 +21,7 @@ These operate on many bits in parallel and are optimized by the compiler.
 ```cpp
 #include <bit_lens.h>
 #include <vector>
+#include <algorithm>
 
 int main() {
   std::vector<unsigned char> container; // the storage container with the actual data
