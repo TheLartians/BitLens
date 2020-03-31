@@ -24,15 +24,17 @@ These operate on many bits in parallel and are optimized by the compiler.
 #include <algorithm>
 
 int main() {
-  bit_lens::BitContainer<std::vector<unsigned>> // create a bit container based on vector<unsigned>
-  // bit_lens::BitLens bits(container); // or: create a lens into an existing container
+  bit_lens::BitContainer<std::vector<unsigned>> bits; // create a bit container based on vector<unsigned>
+  // bit_lens::BitLens bits(container); // or create a lens into an existing container
   bits.resize(10); // resize the container to store at least 10 bits
   bits.size(); // the actual number of bits that the container can store
   bits[8];// gets the 8th bit
   bits[8] = 1; // sets the 8th bit
   for (auto bit: bits) { bit = 1; } // iterate over all bits
   std::count(bits.begin(), bits.end(), true); // <algorithm> compatible iterators
-  for (auto &v: bits.data()) { v &= 0b1101; } // access the underlying container to efficiently perform bitwise bulk operations
+  for (auto &v: bits.data()) { // access the underlying container
+    v &= 0b1101; // perform bitwise bulk operations for best performance (see benchmark)
+  }
 }
 ```
 
