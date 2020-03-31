@@ -233,3 +233,9 @@ public:
 };
 
 } // namespace bit_lens
+
+namespace std {
+template <class T>
+struct iterator_traits<bit_lens::BitIterator<T>>
+    : public bit_lens::BitIterator<T> {};
+} // namespace std
