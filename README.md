@@ -12,7 +12,7 @@ Then this is a library for you!
 ## Usage
 
 The actual data is stored in an unsigned integral container, such as `std::vector<unsigned int>`.
-Biswise operations are performed as usual on the original container.
+Bitwise operations are performed as usual on the original container.
 These operate on many bits in parallel and are optimized by the compiler.
 `bit_lens::BitLens` provides a simple API for bit-specific operations and can be created with zero overhead whenever needed.
 
@@ -40,7 +40,7 @@ int main() {
 
 ## Integration
 
-BitLens is a single header library the can be easily added via [CPM.cmake](https://github.com/TheLartians/CPM.cmake).
+BitLens is a single header library that can be easily added via [CPM.cmake](https://github.com/TheLartians/CPM.cmake).
 
 ```cmake
 CPMAddPackage(
@@ -50,7 +50,7 @@ CPMAddPackage(
 )
 ```
 
-Alternatively use git submodules, install globally, or simply download and copy the [header](include/bit_lens.h) into your project.
+Alternatively, use git submodules, install globally, or simply download and copy the [header](include/bit_lens.h) into your project.
 
 ## Benchmark
 
@@ -79,4 +79,4 @@ bytewiseDifferenceVectorInt          431 ns          430 ns      1602241
 bytewiseDifferenceVectorSizeT        431 ns          430 ns      1604555
 ```
 
-We can see that for integer containers even random access bitwise operations are slightly faster than `vector<bool>`, bitwise iteration is at least twice the speed, while bytewise operations outperform `vector<bool>` by orders of magnitude.
+We can see that for integer containers, even bitwise random access operations are noticably faster than `vector<bool>`. Bitwise has more than twice the speed, while bytewise operations outperform `vector<bool>` by many orders of magnitude.
