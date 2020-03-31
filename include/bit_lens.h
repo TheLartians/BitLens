@@ -89,14 +89,14 @@ public:
     return *this;
   }
 
-  BitIterator operator+(int n) noexcept {
+  BitIterator operator+(int n) const noexcept {
     return BitIterator(iterator, index + n);
   }
-  BitIterator operator-(int n) noexcept {
+  BitIterator operator-(int n) const noexcept {
     return BitIterator(iterator, index - n);
   }
 
-  size_t operator-(const BitIterator &other) noexcept {
+  size_t operator-(const BitIterator &other) const noexcept {
     return index - other.index;
   }
 
