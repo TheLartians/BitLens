@@ -105,7 +105,7 @@ namespace bit_lens {
     BitContainer &container;
 
   public:
-    using Word = typename std::decay<decltype(std::declval<BitContainer>()[0])>::type;
+    using Word = typename std::remove_reference<decltype(std::declval<BitContainer>()[0])>::type;
     static constexpr auto WORD_SIZE = WordSize<Word>::value;
 
     constexpr BitLens(BitContainer &c) noexcept : container(c) {}
@@ -133,9 +133,17 @@ namespace bit_lens {
     /**
      * returns a BitReference to the bit at position `i`.
      */
-    constexpr BitReference<Word> operator[](size_t i) const noexcept(noexcept(container[0])) {
+    constexpr BitReference<Word> operator[](size_t i) noexcept(noexcept(container[0])) {
       Word offset = i % WORD_SIZE;
       return BitReference<Word>(container[i / WORD_SIZE], offset);
+    }
+
+    /**
+     * returns a BitReference to the bit at position `i`.
+     */
+    constexpr BitReference<const Word> operator[](size_t i) const noexcept(noexcept(container[0])) {
+      Word offset = i % WORD_SIZE;
+      return BitReference<const Word>(container[i / WORD_SIZE], offset);
     }
 
     [[deprecated("legacy API: use `[i]` insted")]] bool get(size_t i) const

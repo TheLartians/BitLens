@@ -40,9 +40,11 @@ template <class T, size_t N> void bitwiseRandomAccessBenchmark(benchmark::State 
       if constexpr (std::is_same<T, bool>::value) {
         c[gen()] = a[gen()] && !b[gen()];
       } else {
-        vc.set(gen(), va.get(gen()) && !vb.get(gen()));
+        vc[gen()] = va[gen()] && !vb[gen()];
       }
       benchmark::DoNotOptimize(a);
+      benchmark::DoNotOptimize(b);
+      benchmark::DoNotOptimize(c);
     }
   }
 }
@@ -71,9 +73,9 @@ template <class T> auto bitwiseDifference(const T &a, const T &b) {
   auto vb = bit_lens::BitLens(b);
   auto vc = bit_lens::BitLens(c);
   auto N = va.size();
-  vc.resizeToHold(N);
+  vc.resize(N);
   for (size_t i = 0; i < N; ++i) {
-    vc.set(i, va.get(i) & ~vb.get(i));
+    vc[i] = va[i] & ~vb[i];
   }
   return c;
 }
