@@ -153,12 +153,12 @@ public:
   }
 
   [[deprecated("legacy API: use `[i]` insted")]] bool get(size_t i) const
-      noexcept(noexcept((*this)[i])) {
+      noexcept(noexcept(std::declval<Lens<Container>>()[i])) {
     return (*this)[i];
   }
 
   [[deprecated("legacy API: use `[i] = v` insted")]] void
-  set(size_t i, bool v) noexcept(noexcept((*this)[i])) {
+  set(size_t i, bool v) noexcept(noexcept(std::declval<Lens<Container>>()[i])) {
     (*this)[i] = v;
   }
 
