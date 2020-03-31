@@ -47,7 +47,7 @@ namespace bit_lens {
 
   template <class ContainerIterator> class BitIterator {
   private:
-    using Word = typename std::decay<decltype(*std::declval<ContainerIterator>())>::type;
+    using Word = typename std::remove_reference<decltype(*std::declval<ContainerIterator>())>::type;
     static constexpr auto WORD_SIZE = WordSize<Word>::value;
     ContainerIterator iterator;
     size_t index;
@@ -113,7 +113,9 @@ namespace bit_lens {
     /**
      * returns the number of bits that fit in the container
      */
-    size_t size() noexcept(noexcept(container.size())) { return container.size() * WORD_SIZE; }
+    size_t size() const noexcept(noexcept(container.size())) {
+      return container.size() * WORD_SIZE;
+    }
 
     /**
      * resizes the container to hold at least `N` bits.
