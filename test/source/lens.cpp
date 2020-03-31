@@ -1,21 +1,21 @@
 #include <bit_lens.h>
-#include <bitset>
 #include <doctest/doctest.h>
 #include <easy_iterator.h>
+
+#include <bitset>
 #include <type_traits>
 #include <vector>
 
 // an irregular test sequence
 auto pattern = [](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
 
-TEST_CASE_TEMPLATE("bit lens", T, unsigned char, unsigned short, unsigned int,
-                   size_t) {
+TEST_CASE_TEMPLATE("bit lens", T, unsigned char, unsigned short, unsigned int, size_t) {
   std::vector<T> container;
   bit_lens::BitLens bits(container);
   static_assert(std::is_same<typename decltype(bits)::Word, T>::value);
   constexpr auto wordSize = bit_lens::WordSize<T>::value;
   static_assert(wordSize == sizeof(T) * CHAR_BIT);
-  static_assert(CHAR_BIT >= 8); // assumed in tests
+  static_assert(CHAR_BIT >= 8);  // assumed in tests
 
   SUBCASE("read bits") {
     container.resize(2);

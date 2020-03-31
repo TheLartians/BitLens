@@ -1,15 +1,13 @@
 #include <bit_lens.h>
-#include <bitset>
 #include <doctest/doctest.h>
+
+#include <bitset>
 
 // an irregular test sequence
 auto pattern = [](auto i) { return i % ((i / 3) % 7 + 1) == 0; };
 
-TEST_CASE_TEMPLATE("bit reference", T, unsigned char, unsigned short,
-                   unsigned int, size_t) {
-
+TEST_CASE_TEMPLATE("bit reference", T, unsigned char, unsigned short, unsigned int, size_t) {
   SUBCASE("setting and reading bits") {
-
     bool setBits;
 
     SUBCASE("read bits") { setBits = false; }
