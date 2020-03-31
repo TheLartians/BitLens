@@ -21,7 +21,7 @@ template <class T> auto createRandomData(size_t bytes) {
     for (size_t j = 0; j < bits.size(); ++j) {
       bits[j] = gen();
     }
-    array[i] = T(bits.to_ulong());
+    array[i] = static_cast<T>(bits.to_ullong());
   }
   return array;
 }

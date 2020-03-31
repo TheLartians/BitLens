@@ -29,7 +29,7 @@ TEST_CASE_TEMPLATE("bit reference", T, unsigned char, unsigned short,
       }
     }
     if (!setBits) {
-      value = bits.to_ullong();
+      value = static_cast<T>(bits.to_ullong());
     }
     for (size_t i = 0; i < bits.size(); ++i) {
       bit_lens::BitReference reference(value, i);

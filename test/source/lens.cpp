@@ -26,7 +26,7 @@ TEST_CASE_TEMPLATE("bit lens", T, unsigned char, unsigned short, unsigned int,
     bitset[3] = 1;
     bitset[7] = 1;
 
-    container[0] = static_cast<T>(bitset.to_ulong());
+    container[0] = static_cast<T>(bitset.to_ullong());
     for (size_t i = 0; i < wordSize; ++i) {
       CAPTURE(i);
       CHECK(bits[i] == bitset[i]);
@@ -41,7 +41,7 @@ TEST_CASE_TEMPLATE("bit lens", T, unsigned char, unsigned short, unsigned int,
     // microsoft's STL that that throws an exception. high bits will be tested
     // in the "set bits" test later.
 
-    container[1] = static_cast<T>(bitset.to_ulong());
+    container[1] = static_cast<T>(bitset.to_ullong());
     for (size_t i = 0; i < wordSize; ++i) {
       CAPTURE(i);
       CHECK(bits[wordSize + i] == bitset[i]);
