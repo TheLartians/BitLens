@@ -48,11 +48,8 @@ int main() {
   // access the underlying data container
   bits.data();
 
-  // iterating over single bits should only be done as a last resort
-  // as bitwise operations on the aligned data much more performant
-  for (auto &v: bits.data()) {
-    v &= 0b1101;
-  }
+  // if possible, use bitwise operators on values as it's much more performant (see benchmark)
+  for (auto &v: bits.data()) { v &= 0b1101; }
 }
 ```
 
@@ -83,20 +80,21 @@ cmake --build build/bench -j8
 As an example, on a 2018 mac notebook, the benchmark produced the following output.
 
 ```
-------------------------------------------------------------------------
-Benchmark                              Time             CPU   Iterations
-------------------------------------------------------------------------
-bitwiseRandomAccessVectorBool    1031834 ns      1030598 ns          602
-bitwiseRandomAccessVectorChar     801293 ns       800819 ns          786
-bitwiseRandomAccessVectorInt      846211 ns       844902 ns          814
-bitwiseDifferenceVectorBool       544263 ns       543967 ns         1384
-bitwiseDifferenceVectorChar       153796 ns       153706 ns         4068
-bitwiseDifferenceVectorInt        164300 ns       164038 ns         3995
-bytewiseDifferenceVectorChar        8337 ns         8324 ns        76981
-bytewiseDifferenceVectorInt          431 ns          430 ns      1602241
-bytewiseDifferenceVectorSizeT        431 ns          430 ns      1604555
+-------------------------------------------------------------------------
+Benchmark                               Time             CPU   Iterations
+-------------------------------------------------------------------------
+bitwiseRandomAccessVectorBool     1080454 ns      1079235 ns          629
+bitwiseRandomAccessVectorChar      852203 ns       851398 ns          797
+bitwiseRandomAccessVectorInt       820476 ns       819897 ns          806
+bitwiseDifferenceVectorBool        426308 ns       425972 ns         1331
+bitwiseDifferenceVectorChar        159575 ns       159465 ns         4143
+bitwiseDifferenceVectorInt         171368 ns       171338 ns         3874
+valuewiseDifferenceVectorChar        8185 ns         8180 ns        80039
+valuewiseDifferenceVectorInt          433 ns          433 ns      1560264
+valuewiseDifferenceVectorSizeT        422 ns          422 ns      1636872
 ```
 
-We can see that for integer containers, even bitwise random access operations are noticably faster than `vector<bool>`. Bitwise has more than twice the speed, while using bitwise operators on values outperforms `vector<bool>` by many orders of magnitude.
+We can see that for integer containers, even bitwise random access operations are noticeably faster than `vector<bool>`.
+Bitwise has more than twice the speed, while using bitwise operators on values outperforms `vector<bool>` by many orders of magnitude.
 This is because bitwise operators allow manipulating up to 64 bits at once (depending on the value type) and get an extra performance boost through vectorization.
 Using BitLens we can choose the appropriate representation (value / bits) anytime, allowing us to achieve optimal storage and performance requirements.

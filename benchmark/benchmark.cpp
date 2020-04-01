@@ -57,7 +57,7 @@ BENCHMARK(bitwiseRandomAccessVectorBool);
 BENCHMARK(bitwiseRandomAccessVectorChar);
 BENCHMARK(bitwiseRandomAccessVectorInt);
 
-template <class T> auto bytewiseDifference(const T &a, const T &b) {
+template <class T> auto valuewiseDifference(const T &a, const T &b) {
   auto N = a.size();
   T c;
   c.resize(N);
@@ -80,11 +80,11 @@ template <class T> auto bitwiseDifference(const T &a, const T &b) {
   return c;
 }
 
-template <class T, size_t N> void bytewiseDifferenceBenchmark(benchmark::State &state) {
+template <class T, size_t N> void valuewiseDifferenceBenchmark(benchmark::State &state) {
   auto a = createRandomData<T>(N);
   auto b = createRandomData<T>(N);
   for (auto _ : state) {
-    auto c = bytewiseDifference(a, b);
+    auto c = valuewiseDifference(a, b);
     benchmark::DoNotOptimize(a);
     benchmark::DoNotOptimize(b);
     benchmark::DoNotOptimize(c);
@@ -103,19 +103,19 @@ template <class T, size_t N> void bitwiseDifferenceBenchmark(benchmark::State &s
 }
 
 auto bitwiseDifferenceVectorBool
-    = bytewiseDifferenceBenchmark<bool, 10000>;  // vector bool elements are
-                                                 // actually bits
+    = valuewiseDifferenceBenchmark<bool, 10000>;  // vector bool elements are
+                                                  // actually bits
 auto bitwiseDifferenceVectorChar = bitwiseDifferenceBenchmark<unsigned char, 10000>;
 auto bitwiseDifferenceVectorInt = bitwiseDifferenceBenchmark<unsigned int, 10000>;
-auto bytewiseDifferenceVectorChar = bytewiseDifferenceBenchmark<unsigned char, 10000>;
-auto bytewiseDifferenceVectorInt = bytewiseDifferenceBenchmark<unsigned int, 10000>;
-auto bytewiseDifferenceVectorSizeT = bytewiseDifferenceBenchmark<size_t, 10000>;
+auto valuewiseDifferenceVectorChar = valuewiseDifferenceBenchmark<unsigned char, 10000>;
+auto valuewiseDifferenceVectorInt = valuewiseDifferenceBenchmark<unsigned int, 10000>;
+auto valuewiseDifferenceVectorSizeT = valuewiseDifferenceBenchmark<size_t, 10000>;
 
 BENCHMARK(bitwiseDifferenceVectorBool);
 BENCHMARK(bitwiseDifferenceVectorChar);
 BENCHMARK(bitwiseDifferenceVectorInt);
-BENCHMARK(bytewiseDifferenceVectorChar);
-BENCHMARK(bytewiseDifferenceVectorInt);
-BENCHMARK(bytewiseDifferenceVectorSizeT);
+BENCHMARK(valuewiseDifferenceVectorChar);
+BENCHMARK(valuewiseDifferenceVectorInt);
+BENCHMARK(valuewiseDifferenceVectorSizeT);
 
 BENCHMARK_MAIN();

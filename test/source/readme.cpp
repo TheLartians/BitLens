@@ -34,11 +34,8 @@ void rd_main() {
   // access the underlying data container
   bits.data();
 
-  // iterating over single bits should only be done as a last resort
-  // as bitwise operations on the aligned data much more performant
-  for (auto &v: bits.data()) {
-    v &= 0b1101;
-  }
+  // if possible, iterate over values as it's much more performant (see benchmark)
+  for (auto &v: bits.data()) { v &= 0b1101; }
 }
 // clang-format on
 
