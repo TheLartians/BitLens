@@ -95,6 +95,6 @@ valuewiseDifferenceVectorSizeT        422 ns          422 ns      1636872
 ```
 
 We can see that for integer containers, even bitwise random access operations are noticeably faster than `vector<bool>`.
-Bitwise has more than twice the speed, while using bitwise operators on values outperforms `vector<bool>` by many orders of magnitude.
+Bitwise iteration using a `BitLens` has more than twice the speed, while doing bitwise operations on values (e.g. working on `BitLens::data()`) outperforms `vector<bool>` by many orders of magnitude.
 This is because bitwise operators allow manipulating up to 64 bits at once (depending on the value type) and get an extra performance boost through vectorization.
 Using BitLens we can choose the appropriate representation (value / bits) anytime, allowing us to achieve optimal storage and performance requirements.
