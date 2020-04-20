@@ -2,6 +2,7 @@
 [![Actions Status](https://github.com/TheLartians/BitLens/workflows/Windows/badge.svg)](https://github.com/TheLartians/BitLens/actions)
 [![Actions Status](https://github.com/TheLartians/BitLens/workflows/Ubuntu/badge.svg)](https://github.com/TheLartians/BitLens/actions)
 [![Actions Status](https://github.com/TheLartians/BitLens/workflows/Style/badge.svg)](https://github.com/TheLartians/BitLens/actions)
+[![Actions Status](https://github.com/TheLartians/BitLens/workflows/Install/badge.svg)](https://github.com/TheLartians/BitLens/actions)
 
 # BitLens
 
