@@ -21,7 +21,7 @@ CPMAddPackage(
 )
 
 if (TEST_INSTALLED_VERSION)
-  find_package(BitLens)
+  find_package(BitLens REQUIRED)
 else()
   CPMAddPackage(
     NAME BitLens
