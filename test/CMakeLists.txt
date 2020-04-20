@@ -7,6 +7,7 @@ project(BitLensTests
 # ---- Options ----
 
 option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
+option(TEST_INSTALLED_VERSION "Test the version found by find_package" OFF)
 
 # ---- Dependencies ----
 
@@ -19,10 +20,14 @@ CPMAddPackage(
   GIT_TAG 2.3.2
 )
 
-CPMAddPackage(
-  NAME BitLens
-  SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..
-)
+if (TEST_INSTALLED_VERSION)
+  find_package(BitLens REQUIRED)
+else()
+  CPMAddPackage(
+    NAME BitLens
+    SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/..
+  )
+endif()
 
 CPMAddPackage(
   NAME EasyIterator
