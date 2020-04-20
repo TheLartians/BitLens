@@ -13,6 +13,16 @@ if(${PROJECT_SOURCE_DIR} STREQUAL ${PROJECT_BINARY_DIR})
     message(FATAL_ERROR "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there.")
 endif()
 
+# ---- Dependencies ----
+
+include(cmake/CPM.cmake)
+
+CPMAddPackage(
+  NAME PackageProject.cmake
+  GITHUB_REPOSITORY TheLartians/PackageProject.cmake
+  VERSION 1.1
+)
+
 # ---- Make headers visible in IDEs ----
 
 FILE(GLOB_RECURSE headers "${CMAKE_CURRENT_SOURCE_DIR}/include/*.h")
@@ -40,38 +50,11 @@ write_basic_package_version_file(
 
 # ---- Install ----
 
-install(
-  TARGETS BitLens
-  EXPORT BitLensTargets
-  LIBRARY DESTINATION lib COMPONENT Runtime
-  ARCHIVE DESTINATION lib COMPONENT Development
-  RUNTIME DESTINATION bin COMPONENT Runtime
-  PUBLIC_HEADER DESTINATION include COMPONENT Development
-  BUNDLE DESTINATION bin COMPONENT Runtime
-)
-
-include(CMakePackageConfigHelpers)
-
-configure_package_config_file(
-  "${PROJECT_SOURCE_DIR}/cmake/BitLensConfig.cmake.in"
-  "${PROJECT_BINARY_DIR}/BitLensConfig.cmake"
-  INSTALL_DESTINATION lib/cmake/BitLens
-)
-
-install(
-  EXPORT BitLensTargets 
-  DESTINATION lib/cmake/BitLens
-)
-
-install(
-  FILES 
-    "${PROJECT_BINARY_DIR}/BitLensConfigVersion.cmake"
-    "${PROJECT_BINARY_DIR}/BitLensConfig.cmake"
-  DESTINATION 
-    lib/cmake/BitLens
-)
-
-install(
-  DIRECTORY ${PROJECT_SOURCE_DIR}/include/
-  DESTINATION include
+packageProject(
+  NAME ${PROJECT_NAME}
+  VERSION ${PROJECT_VERSION}
+  BINARY_DIR ${PROJECT_BINARY_DIR}
+  INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include
+  INCLUDE_DESTINATION include/${PROJECT_NAME}-${PROJECT_VERSION}
+  DEPENDENCIES "EasyIterator;BitLens"
 )
